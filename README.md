@@ -34,7 +34,6 @@ and PayPal/Stripe for online transactions.
 
 • [diagram](#) (ari daw butang links pre) 
 
-## 👤 Developers Profile
 
 ## 👤 Developers Profile
 
