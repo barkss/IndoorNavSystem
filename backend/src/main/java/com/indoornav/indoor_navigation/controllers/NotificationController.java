@@ -1,7 +1,8 @@
 package com.indoornav.indoor_navigation.controllers;
 
-import com.indoornav.indoor_navigation.models.Notification;
+import com.indoornav.indoor_navigation.models.NotificationEntity;
 import com.indoornav.indoor_navigation.repositories.NotificationRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,13 +17,20 @@ public class NotificationController {
         this.notificationRepository = notificationRepository;
     }
 
-    @GetMapping("/{userId}")
-    public List<Notification> getNotificationsByUser(@PathVariable Long userId) {
-        return notificationRepository.findByUserId(userId);
+    @GetMapping
+    public List<NotificationEntity> getAllNotifications() {
+        return notificationRepository.findAll();
     }
 
     @PostMapping
-    public Notification sendNotification(@RequestBody Notification notification) {
+    public NotificationEntity createNotification(@RequestBody NotificationEntity notification) {
         return notificationRepository.save(notification);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteNotification(@PathVariable Long id) {
+        if (!notificationRepository.existsById(id)) return ResponseEntity.notFound().build();
+        notificationRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

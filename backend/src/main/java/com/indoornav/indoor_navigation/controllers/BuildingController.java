@@ -1,10 +1,9 @@
 package com.indoornav.indoor_navigation.controllers;
 
-import com.indoornav.indoor_navigation.models.Building;
+import com.indoornav.indoor_navigation.models.BuildingEntity;
 import com.indoornav.indoor_navigation.repositories.BuildingRepository;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -12,44 +11,42 @@ import java.util.List;
 @RequestMapping("/api/buildings")
 public class BuildingController {
 
-    @Autowired
-    private BuildingRepository buildingRepository;
+    private final BuildingRepository buildingRepository;
+
+    public BuildingController(BuildingRepository buildingRepository) {
+        this.buildingRepository = buildingRepository;
+    }
 
     @GetMapping
-    public List<Building> getAllBuildings() {
+    public List<BuildingEntity> getAllBuildings() {
         return buildingRepository.findAll();
     }
 
-    @PostMapping
-    public Building createBuilding(@RequestBody Building building) {
-        return buildingRepository.save(building);
-    }
-
     @GetMapping("/{id}")
-    public ResponseEntity<Building> getBuildingById(@PathVariable Long id) {
+    public ResponseEntity<BuildingEntity> getBuildingById(@PathVariable Long id) {
         return buildingRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PostMapping
+    public BuildingEntity createBuilding(@RequestBody BuildingEntity building) {
+        return buildingRepository.save(building);
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Building> updateBuilding(@PathVariable Long id, @RequestBody Building buildingDetails) {
-        return buildingRepository.findById(id)
-                .map(building -> {
-                    building.setName(buildingDetails.getName());
-                    building.setLocation(buildingDetails.getLocation());
-                    return ResponseEntity.ok(buildingRepository.save(building));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<BuildingEntity> updateBuilding(@PathVariable Long id, @RequestBody BuildingEntity updatedBuilding) {
+        return buildingRepository.findById(id).map(building -> {
+            building.setName(updatedBuilding.getName());
+            building.setDescription(updatedBuilding.getDescription());
+            return ResponseEntity.ok(buildingRepository.save(building));
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteBuilding(@PathVariable Long id) {
-        return buildingRepository.findById(id)
-                .map(building -> {
-                    buildingRepository.delete(building);
-                    return ResponseEntity.ok().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Void> deleteBuilding(@PathVariable Long id) {
+        if (!buildingRepository.existsById(id)) return ResponseEntity.notFound().build();
+        buildingRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

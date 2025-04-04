@@ -1,4 +1,8 @@
 package com.indoornav.indoor_navigation.repositories;
 
-public interface RouteRepository {
+
+import com.indoornav.indoor_navigation.models.RouteEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RouteRepository extends JpaRepository<RouteEntity, Long> {
 }
