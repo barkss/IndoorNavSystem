@@ -1,22 +1,19 @@
 package com.indoornav.indoor_navigation.models;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "roles")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String email;
-    private String password;
-    private String role; // Shopper, StoreOwner, Admin
+    @Enumerated(EnumType.STRING)
+    private RoleName name;
 }
