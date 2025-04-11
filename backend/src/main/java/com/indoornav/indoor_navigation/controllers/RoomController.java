@@ -1,6 +1,6 @@
 package com.indoornav.indoor_navigation.controllers;
 
-import com.indoornav.indoor_navigation.models.RoomEntity;
+import com.indoornav.indoor_navigation.entities.RoomEntity;
 import com.indoornav.indoor_navigation.repositories.RoomRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

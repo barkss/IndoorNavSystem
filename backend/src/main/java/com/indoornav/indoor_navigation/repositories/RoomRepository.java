@@ -1,6 +1,6 @@
 package com.indoornav.indoor_navigation.repositories;
 
-import com.indoornav.indoor_navigation.models.RoomEntity;
+import com.indoornav.indoor_navigation.entities.RoomEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.indoornav.indoor_navigation.controllers;
 
 
-import com.indoornav.indoor_navigation.models.CampusStoreEntity;
+import com.indoornav.indoor_navigation.entities.CampusStoreEntity;
 import com.indoornav.indoor_navigation.repositories.CampusStoreRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

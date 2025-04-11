@@ -1,4 +1,4 @@
-package com.indoornav.indoor_navigation.models;
+package com.indoornav.indoor_navigation.entities;
 
 public enum UserRole {
     ADMIN,
