@@ -1,4 +1,22 @@
 package com.indoornav.indoor_navigation_backend.Repository;
 
-public interface UserRepository {
+import com.indoornav.indoor_navigation_backend.Entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import javax.management.relation.Role;
+import java.util.Optional;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    Optional<User> findByUsername(String username);
+
+    Boolean existsByUsername(String username);
+
+    Boolean existsByEmail(String email);
+
+
+    Optional<User> findByEmail(String email);
+
 }
