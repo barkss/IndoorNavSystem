@@ -1,70 +1,119 @@
 /* SignUp.css */
 
 .signup-container {
-    width: 300px;
-    margin: 50px auto;
-    padding: 20px;
+    width: 550px; /* Slightly reduce container width */
+    margin: 15px auto; /* Further reduce top/bottom margin */
+    padding: 10px; /* Further reduce padding */
     border: 1px solid #ccc;
     border-radius: 5px;
-    position: relative; /* Add this */
-    z-index: 1; /* Add this */
-    background-color: rgba(255, 255, 255, 0.8); /* Optional: add a semi-transparent background */
-    padding: 20px; /* Optional: add padding for better visibility */
+    position: relative;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .signup-container h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 8px; /* Further reduce margin */
+    padding: 4px 8px; /* Further reduce padding */
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 1.4em; /* Further reduce font size */
 }
 
-.form-group {
-    margin-bottom: 15px;
+.signup-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px; /* Further reduce gap */
+    padding-bottom: 8px; /* Further reduce padding */
 }
 
-.form-group label {
+.signup-form-grid .form-group {
+    margin-bottom: 3px; /* Further reduce margin */
+}
+
+.signup-form-grid .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 2px; /* Further reduce margin */
+    font-weight: bold;
+    padding: 1px 3px; /* Further reduce padding */
+    border-radius: 2px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Slightly reduce text shadow */
+    color: #1A0008;
+    font-size: 0.85em; /* Further reduce font size */
 }
 
-.form-group input {
+.signup-form-grid .form-group input[type="text"],
+.signup-form-grid .form-group input[type="email"],
+.signup-form-grid .form-group input[type="password"],
+.signup-form-grid .form-group select {
     width: 100%;
-    padding: 8px;
+    padding: 5px; /* Further reduce padding */
+    margin-bottom: 6px; /* Further reduce margin */
     border: 1px solid #ccc;
     border-radius: 3px;
+    box-sizing: border-box;
+    font-size: 0.85em; /* Further reduce font size */
 }
 
-.signup-container button {
-    width: 100%;
-    padding: 10px;
+/* Special handling for the password match error */
+.signup-form-grid .form-group .error-message {
+    color: red;
+    font-size: 0.75em; /* Further reduce font size */
+    margin-top: 2px; /* Further reduce margin */
+}
+
+/* Make the "Confirm Password" and "Role" fields span two columns */
+.signup-form-grid .form-group:nth-child(6) { /* Confirm Password */
+    grid-column: 1 / 3;
+    margin-top: 6px; /* Further reduce margin */
+}
+
+.signup-form-grid .form-group:nth-child(7) { /* Role */
+    grid-column: 1 / 3;
+    margin-top: 6px; /* Further reduce margin */
+}
+
+/* Make the submit button span two columns */
+.signup-form-grid .signup-button {
+    grid-column: 1 / 3;
+    padding: 6px 12px; /* Further reduce padding */
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 3px;
     cursor: pointer;
+    font-size: 0.9em; /* Further reduce font size */
+    margin-top: 8px; /* Further reduce margin */
 }
 
+.signup-form-grid .signup-button:hover {
+    background-color: #0056b3;
+}
 
 .google-signin-button {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: transparent; /* Remove background */
-    border: none; /* Remove border */
-    padding: 0; /* Remove padding */
+    background-color: transparent;
+    border: none;
+    padding: 3px 0; /* Further reduce padding */
     cursor: pointer;
-    margin-top: 10px;
-    color: #000; /* Set icon color */
+    margin-top: 8px; /* Further reduce margin */
+    color: #000;
+    font-size: 0.8em; /* Further reduce font size */
 }
 
 .google-signin-button svg {
-    margin-right: 8px;
-    font-size: 2rem; /* Adjust icon size if needed */
+    margin-right: 3px; /* Further reduce margin */
+    font-size: 1.1rem; /* Further reduce icon size */
 }
 
 .signin-link {
-    margin-top: 10px;
+    margin-top: 6px; /* Further reduce margin */
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 0.75em; /* Further reduce font size */
 }
 
 .signin-link a {
@@ -74,4 +123,25 @@
 
 .signin-link a:hover {
     text-decoration: underline;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 0.4rem 0.8rem; /* Further reduce padding */
+    margin-bottom: 0.4rem; /* Further reduce margin */
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    font-size: 0.75em; /* Further reduce font size */
+}
+
+.redirect-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 15px;
+    text-align: center;
 }

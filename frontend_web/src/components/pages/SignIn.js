@@ -1,28 +1,46 @@
 import React, { useState } from 'react';
-import './SignIn.css'; // Create this CSS file
+import './SignIn.css';
 import '../HeroSection.css';
 import Google from '@mui/icons-material/Google';
 import { SvgIcon } from '@mui/material';
-
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Updated import
 
 function SignIn() {
-    console.log('SignIn component rendered'); // Add the console.log here
+    console.log('SignIn component rendered');
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate(); // Use useNavigate
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Sign In submitted:', { email, password });
-        // Replace with your sign-in logic
-        setEmail('');
-        setPassword('');
+        setErrorMessage('');
+        try {
+            const response = await axios.post('http://localhost:8080/api/auth/signin', {
+                email,
+                password,
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            console.log('Signin successful:', response.data);
+            localStorage.setItem('jwtToken', response.data.token);
+            navigate('/'); // Use navigate for redirection
+        } catch (error) {
+            console.error('Signin failed:', error);
+            if (error.response && error.response.status === 401) {
+                setErrorMessage('Incorrect email or password.');
+            } else {
+                setErrorMessage('Signin failed. Please try again later.');
+            }
+        }
     };
 
     const handleGoogleSignIn = () => {
-        // Replace with your Google authentication logic
         console.log('Google Sign In clicked!');
-        // You would typically redirect the user to your Google authentication endpoint here
     };
 
     return (
@@ -30,6 +48,7 @@ function SignIn() {
             <video src='/videos/cit-drone.mp4' autoPlay loop muted />
             <div className="signin-container">
                 <h2>Sign In</h2>
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="email">Email:</label>
