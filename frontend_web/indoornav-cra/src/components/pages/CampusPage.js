@@ -7,7 +7,7 @@ function CampusPage() {
     const apiSecret = 'mis_Tm3GTCVTOd8IrUHgPlxS0FSj0rJriGrQvMDKuEEsAt983be100c';
 
     return (
-        <div style={{ width: '100%', height: '500px' }}> {/* ADD THIS STYLE */}
+        <div style={{ width: '100%', height: '500px' }}>
             <h1>Campus Map</h1>
             <CampusMap apiKey={apiKey} apiSecret={apiSecret} mapId={mapId} />
         </div>

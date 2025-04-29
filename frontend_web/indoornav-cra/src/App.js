@@ -7,7 +7,8 @@ import Services from './components/pages/Services';
 import Products from './components/pages/Products';
 import SignUp from './components/pages/SignUp';
 import SignIn from './components/pages/SignIn';
-import CampusPage from './components/pages/CampusPage'; // Make sure you still have this
+import CampusPage from './components/pages/CampusPage';
+import { MapProvider } from './MapContext'; // Import the MapProvider
 
 function App() {
     return (
@@ -19,7 +20,11 @@ function App() {
                 <Route path="/products" element={<Products />} />
                 <Route path="/sign-up" element={<SignUp />} />
                 <Route path="/sign-in" element={<SignIn />} />
-                <Route path="/campus" element={<CampusPage />} />
+                <Route path="/campus" element={
+                    <MapProvider>
+                        <CampusPage />
+                    </MapProvider>
+                } />
             </Routes>
         </Router>
     );
