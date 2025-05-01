@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "71486059960",
+    "project_id": "indoornavsystem-b445a",
+    "storage_bucket": "indoornavsystem-b445a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71486059960:android:c9f5890d78507888238b4d",
+        "android_client_info": {
+          "package_name": "com.mark.indoornav"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9n-bmeA45Q41wNWaefWb8N9K_D7knGlg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
