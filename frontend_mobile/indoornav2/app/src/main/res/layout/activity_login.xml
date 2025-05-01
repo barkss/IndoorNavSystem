@@ -63,9 +63,9 @@
             android:id="@+id/go_to_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Already have an account? Login"
-            android:textSize="18sp"
-            android:textColor="@color/black">
+            android:text="Don't have an account? Register"
+            android:textColor="@color/black"
+            android:textSize="18sp">
 
         </TextView>
 

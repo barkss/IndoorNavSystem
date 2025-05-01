@@ -23,10 +23,12 @@
             </intent-filter>
         </activity>
 
-        <!-- Register Activity (you missed this) -->
+        <!-- Register Activity -->
         <activity android:name=".RegisterActivity" />
 
-    </application>
+        <!-- Home Activity -->
+        <activity android:name=".HomeActivity" />
 
+    </application>
 
 </manifest>
