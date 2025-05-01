@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
-// import WayfindingPage from './pages/WayfindingPage'; // Import when you create it
+// import WayfindingPage from '/pages/WayfindingPage'; // Import when you create it
 
 function App() {
     return (
@@ -12,7 +12,7 @@ function App() {
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    {/* <Route path="/wayfinding" element={<WayfindingPage />} /> */}
+                     {/*<Route path="/wayfinding" element={<WayfindingPage />} />*/}
                     {/* Add more routes for other pages */}
                 </Routes>
             </div>

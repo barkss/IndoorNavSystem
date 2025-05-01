@@ -1,10 +1,9 @@
-// main.tsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './style.css';
 
-const rootElement = document.getElementById('mappedin-map');
+const rootElement = document.getElementById('root');
 if (rootElement) {
     ReactDOM.createRoot(rootElement).render(
         <React.StrictMode>
@@ -12,5 +11,5 @@ if (rootElement) {
         </React.StrictMode>
     );
 } else {
-    console.error("Could not find the 'mappedin-map' element in the DOM.");
+    console.error("Could not find the 'root' element in the DOM.");
 }
