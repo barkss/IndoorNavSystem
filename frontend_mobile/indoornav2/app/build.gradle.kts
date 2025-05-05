@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.gms.google-services")
+
 }
 
 android {
@@ -26,6 +28,10 @@ android {
             )
         }
     }
+    buildFeatures{
+        viewBinding = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -54,5 +60,10 @@ dependencies {
     implementation ("com.mappedin.sdk:mappedin:5.9.0")
 
     // Add these if you need location services
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation("com.google.firebase:firebase-auth-ktx")    // Auth with Kotlin extensions
+    implementation("com.google.firebase:firebase-database-ktx")// Realtime DB with Kotlin extensions
+    implementation("com.google.firebase:firebase-analytics")  // Optional analytics
+    implementation ("com.google.firebase:firebase-database:21.0.0")
 
 }

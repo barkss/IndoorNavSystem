@@ -28,9 +28,9 @@ class HomeActivity : AppCompatActivity(), MPIMapViewListener {
         // https://developer.mappedin.com/api-keys/
         mapView.loadVenue(
             MPIOptions.Init(
-                "mik_OIccPYLRSZncAbYfv53bc079c",
-                "mis_nQr3vsV4p3ZP7FWSdeYQPyzVEg0K6mETlfeqsih90Oj8ff71071",
-                "67dcbbef213bd1000bd6bc3b",
+                "5eab30aa91b055001a68e996",
+                "RJyRXKcryCMy4erZqqCbuB1NbR66QTGNXVE0x3Pg6oCIlUR1",
+                "mappedin-demo-mall",
             ),
          MPIOptions.ShowVenue(
                 shadingAndOutlines = true,
