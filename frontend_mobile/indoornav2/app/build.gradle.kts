@@ -45,4 +45,14 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation("androidx.activity:activity-compose:1.8.0")
+    implementation("androidx.compose.material:material:1.6.1")
+    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
+
+    implementation ("com.mappedin.sdk:mappedin:5.9.0")
+
+    // Add these if you need location services
+
 }
