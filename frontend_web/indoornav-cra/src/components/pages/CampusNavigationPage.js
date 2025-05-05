@@ -27,16 +27,19 @@ const CampusNavigationPage = () => {
                         });
                     });
 
-
-                    // Act on the click event to create a label with the space name that was clicked.
-                    // If the space has no name, use the coordinate.
+                    // Act on the click event to focus the camera on the clicked space.
                     mapView.on('click', async (e) => {
-                        if (e.spaces[0]?.name) { // Optional chaining to safely access name
-                            mapView.Labels.add(e.coordinate, e.spaces[0].name);
-                        } else {
-                            mapView.Labels.add(e.coordinate, `Clicked: Lat: ${e.coordinate.latitude} Lon: ${e.coordinate.longitude}`);
+                        if (e.spaces && e.spaces.length > 0) {
+                            mapView.Camera.focusOn(e.spaces[0]);
                         }
                     });
+
+                    // Optional: Add labels for all named spaces (as in your original code)
+                    mapData.getByType('space')
+                        .filter(space => space.name)
+                        .forEach(space => {
+                            mapView.Labels.add(space, space.name);
+                        });
                 }
             } catch (error) {
                 console.error('Failed to initialize Mappedin map:', error);

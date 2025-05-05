@@ -12,6 +12,8 @@ import CampusNavigationPage from './components/pages/CampusNavigationPage'; // I
 import NavigationDrawPage from './components/pages/NavigationDrawPage';
 import BlueDotPage from './components/pages/BlueDotPage'; // Import the BlueDotPage component
 import { MapProvider } from './MapContext'; // Import the MapProvider (if you have one)
+import PointToPointPath from './components/pages/PointToPointPath';
+
 
 function App() {
     return (
@@ -27,6 +29,7 @@ function App() {
                 <Route path="/navigate" element={<CampusNavigationPage />} /> {/* Wayfinding functionality */}
                 <Route path="/draw-navigation" element={<NavigationDrawPage />} /> {/* New route for draw navigation */}
                 <Route path="/blue-dot" element={<BlueDotPage />} /> {/* Add the route for BlueDotPage */}
+                <Route path="/point-to-point" element={<PointToPointPath />} />
             </Routes>
         </Router>
     );

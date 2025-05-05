@@ -3,16 +3,24 @@ import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapLocationDot } from '@fortawesome/free-solid-svg-icons';
-import Dropdown from './Dropdown';
+import { faMapLocationDot, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import Dropdown from './Dropdown'; // Assuming Dropdown.js is in the same directory
 
 function Navbar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
-  const [dropdown, setDropdown] = useState(false);
+  const [dropdown, setDropdown] = useState(false); // State for the Campus Maps dropdown
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+
+
+  // New function to toggle the dropdown on click in mobile view
+  const toggleDropdownMobile = () => {
+    if (window.innerWidth < 960) {
+      setDropdown(!dropdown);
+    }
+  };
 
   const onMouseEnter = () => {
     if (window.innerWidth < 960) {
@@ -46,14 +54,15 @@ function Navbar() {
 
   return (
       <>
-        <nav className='navbar'>
+        <nav className='navbar' style={{ zIndex: 1002 }}>
           <div className='navbar-container'>
             <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-              INDOORNAV
+              CIT-U Wild Map
               <FontAwesomeIcon icon={faMapLocationDot} className="icon-space" />
             </Link>
             <div className='menu-icon' onClick={handleClick}>
-              <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
+              <i className={click ? 'fas fa-xmark' : 'fas fa-bars'} />
+
             </div>
             <ul className={click ? 'nav-menu active' : 'nav-menu'}>
               <li className='nav-item'>
@@ -65,26 +74,26 @@ function Navbar() {
                   className='nav-item'
                   onMouseEnter={onMouseEnter}
                   onMouseLeave={onMouseLeave}
+                  onClick={toggleDropdownMobile} // Add onClick for mobile
               >
                 <Link
-                    to='/campus'
+                    to=''
                     className='nav-links'
-                    onClick={closeMobileMenu}
+                    // onClick={closeMobileMenu}
                 >
-                  Campus Maps <i className='fas fa-caret-down' />
+                  Campus Maps <FontAwesomeIcon icon={faCaretDown} className="dropdown-icon" />
                 </Link>
                 {dropdown && <Dropdown />}
               </li>
               <li className='nav-item'>
                 <Link
-                    to='/products'
+                    to='/draw-navigation'
                     className='nav-links'
                     onClick={closeMobileMenu}
                 >
                   Search Location
                 </Link>
               </li>
-
               <li>
                 <Link
                     to='/sign-up'
@@ -95,7 +104,7 @@ function Navbar() {
                 </Link>
               </li>
             </ul>
-            {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
+            {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>} {/* Keep your Sign Up button */}
           </div>
         </nav>
       </>

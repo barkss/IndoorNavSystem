@@ -4,22 +4,22 @@
     background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
     height: 80px;
     display: flex;
-    justify-content: space-between; /* Changed to space-between */
+    justify-content: space-between; /* Adjusted from center */
     align-items: center;
     font-size: 1.2rem;
     position: sticky;
     top: 0;
     z-index: 999;
-    padding: 0 20px; /* Added padding for better spacing */
+    padding: 0 20px; /* Added padding */
 }
 
 .navbar-container {
     display: flex;
-    justify-content: space-between; /* Changed to space-between */
+    justify-content: space-between; /* Adjusted from center */
     align-items: center;
     height: 80px;
     max-width: 1500px;
-    width: 100%; /* Make container take full width */
+    width: 100%; /* Added width */
 }
 
 .navbar-logo {
@@ -30,6 +30,8 @@
     font-size: 2rem;
     display: flex;
     align-items: center;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
 }
 
 .icon-space {
@@ -42,14 +44,14 @@
 }
 
 .nav-menu {
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    grid-gap: 10px;
+    display: flex; /* Changed to flex for better mobile transition */
+    flex-direction: row; /* Adjusted for desktop */
     list-style: none;
     text-align: center;
-    width: auto; /* Changed to auto to fit content */
-    justify-content: end;
-    margin-right: 0; /* Removed fixed right margin */
+    width: auto; /* Adjusted from 60vw */
+    justify-content: flex-end; /* Adjusted for desktop */
+    margin-right: 0; /* Adjusted from 2rem */
+    align-items: center; /* Vertically align items on desktop */
 }
 
 .nav-item {
@@ -79,7 +81,7 @@
 }
 
 .menu-icon {
-    display: none;
+    display: none; /* Hidden on desktop */
 }
 
 /* Profile Dropdown Styles */
@@ -87,26 +89,26 @@
     position: relative;
     display: flex;
     align-items: center;
-    margin-left: 15px; /* Adjust spacing from navigation items */
+    margin-left: 15px;
 }
 
 .profile-icon {
     font-size: 2rem;
     cursor: pointer;
-    color: white; /* Adjust color as needed */
+    color: white;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #333; /* Darker background for dropdown */
+    background-color: #333;
     min-width: 120px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 2; /* Ensure it's above other elements */
+    z-index: 2;
     right: 0;
     top: 100%;
     border-radius: 5px;
-    margin-top: 5px; /* Add some space between icon and dropdown */
+    margin-top: 5px;
 }
 
 .profile-dropdown:hover .dropdown-content {
@@ -126,7 +128,7 @@
 }
 
 .dropdown-content button:hover {
-    background-color: #555; /* Slightly lighter hover */
+    background-color: #555;
 }
 
 .logout-icon {
@@ -135,44 +137,41 @@
 
 /* Media query for mobile view */
 @media screen and (max-width: 960px) {
-    .navbar {
-        justify-content: space-between; /* Keep logo and menu icon on opposite ends */
-        padding: 0 20px;
-    }
-
-    .navbar-container {
-        justify-content: space-between; /* Keep logo and menu icon on opposite ends */
-    }
-
     .nav-menu {
         display: flex;
         flex-direction: column;
         width: 100%;
-        height: auto; /* Adjust height for mobile */
+        height: auto; /* Adjusted from 90vh */
         position: absolute;
         top: 80px;
-        left: -100%;
+        left: -100%; /* Initially hidden */
         opacity: 1;
-        transition: all 0.5s ease;
+        transition: all 0.3s ease; /* Adjusted transition */
         z-index: 1;
         background: #242222;
+        align-items: flex-start; /* Align items to the left in mobile */
+        padding: 0; /* Remove default padding */
+        margin-right: 0; /* Reset margin */
     }
 
     .nav-menu.active {
-        left: 0;
+        left: 0; /* Slide into view */
         opacity: 1;
-        transition: all 0.5s ease;
+        transition: all 0.3s ease; /* Adjusted transition */
+        z-index: 9999; /* Set z-index higher than the search field container */
     }
 
     .nav-item {
-        height: auto; /* Adjust item height for mobile */
+        width: 100%; /* Make each item take full width */
+        height: auto; /* Adjust height for mobile */
     }
 
     .nav-links {
-        text-align: center;
-        padding: 2rem;
+        color: #fff; /* Text color */
+        display: block; /* Stack vertically */
+        text-align: left; /* Align text to the left in mobile */
+        padding: 1.5rem 2rem; /* Adjust padding for better touch targets */
         width: 100%;
-        display: block;
     }
 
     .nav-links:hover {
@@ -181,13 +180,24 @@
         border-radius: 0;
     }
 
+    .dropdown-icon {
+        margin-left: 5px; /* Adjust spacing as needed */
+    }
+
     .navbar-logo {
-        position: static; /* Adjust logo positioning for mobile */
-        transform: none;
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        transform: translateY(-50%);
+        z-index: 1002; /* Or a value higher than the search input's zIndex */
     }
 
     .menu-icon {
-        display: block;
+        display: block; /* Show on mobile */
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
         font-size: 1.8rem;
         cursor: pointer;
     }
@@ -196,6 +206,12 @@
         color: #fff;
         font-size: 2rem;
     }
+
+    .fa-xmark {
+        color: #fff;
+        font-size: 2rem;
+    }
+
 
     .nav-links-mobile {
         display: block;
@@ -219,30 +235,6 @@
     }
 
     .profile-dropdown {
-        margin-left: 0; /* Reset margin for mobile */
-        margin-top: 1rem; /* Add some space below the mobile menu */
-        position: static; /* Adjust positioning for mobile */
-    }
-
-    .profile-icon {
-        font-size: 2.5rem; /* Adjust icon size for mobile */
-        margin-left: 0;
-    }
-
-    .dropdown-content {
-        position: static; /* Display inline on mobile */
-        display: block;
-        background-color: transparent;
-        box-shadow: none;
-        width: 100%;
-        text-align: center;
-        margin-top: 1rem;
-    }
-
-    .dropdown-content button {
-        width: 80%;
-        margin: 0.5rem auto;
-        border: 1px solid #fff;
-        border-radius: 4px;
+        display: none; /* Hide profile dropdown on mobile for simplicity */
     }
 }

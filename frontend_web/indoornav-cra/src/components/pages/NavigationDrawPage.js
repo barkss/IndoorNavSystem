@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getMapData, show3dMap, Navigation } from '@mappedin/mappedin-js';
+import { getMapData, show3dMap } from '@mappedin/mappedin-js';
 import '@mappedin/mappedin-js/lib/index.css';
 import BaseCampusMap from '../BaseCampusMap';
 
@@ -13,8 +13,9 @@ const NavigationDrawPage = () => {
     const [endPointResults, setEndPointResults] = useState([]);
     const [selectedStartPoint, setSelectedStartPoint] = useState(null);
     const [selectedEndPoint, setSelectedEndPoint] = useState(null);
-    const [clickStep, setClickStep] = useState(0); // 0 = next click sets start, 1 = next click sets end
-
+    const [clickStep, setClickStep] = useState(0);
+    const [path, setPath] = useState(null); // To store the drawn path
+    const [isNightMode, setIsNightMode] = useState(false);
 
     useEffect(() => {
         const options = {
@@ -23,84 +24,101 @@ const NavigationDrawPage = () => {
             mapId: '67dcbbef213bd1000bd6bc3b',
         };
 
-        const init = async () => {
+        const initMap = async () => {
             try {
                 const mapData = await getMapData(options);
                 setMapDataState(mapData);
 
                 if (mapDiv.current) {
-                    const mapView = await show3dMap(mapDiv.current, mapData);
+                    const mapView = await show3dMap(mapDiv.current, mapData, {
+                        venueOptions: {
+                            theme: isNightMode ? 'dark' : 'light',
+                        },
+                    });
                     mapViewRef.current = mapView;
 
-                    if (mapView.Navigation?.setup) {
-                        await mapView.Navigation.setup();
-                    }
-
-                    mapData.getByType('space').forEach((space) => {
-                        mapView.updateState(space, {
-                            interactive: true,
-                            hoverColor: 'red',
+                    const setSpacesInteractive = (interactive) => {
+                        mapData.getByType('space').forEach((space) => {
+                            mapView.updateState(space, {
+                                interactive: interactive,
+                                hoverColor: interactive ? '#f26336' : null,
+                            });
                         });
-                    });
+                    };
 
-                    // ✅ Register click handler AFTER mapView is defined
-                    mapView.on('click', async (event) => {
-                        const { intersections } = event;
-                        if (!intersections || intersections.length === 0) return;
+                    setSpacesInteractive(true);
 
-                        const clickedObject = intersections.find(i => i.type === 'space');
-                        if (!clickedObject) return;
-
-                        const clickedSpace = clickedObject.object;
-
-                        if (clickStep === 0) {
-                            setSelectedStartPoint(clickedSpace);
-                            setStartPointQuery(clickedSpace.name || '');
-                            console.log('Selected start point via click:', clickedSpace.name);
-                            setClickStep(1);
-                        } else if (clickStep === 1) {
-                            setSelectedEndPoint(clickedSpace);
-                            setEndPointQuery(clickedSpace.name || '');
-                            console.log('Selected end point via click:', clickedSpace.name);
-                            setClickStep(0);
-
-                            if (mapView.Navigation && selectedStartPoint && clickedSpace) {
-                                try {
-                                    const directions = await mapView.Navigation.getDirections(selectedStartPoint, clickedSpace);
-                                    if (directions) {
-                                        await mapView.Navigation.draw(directions, {
-                                            pathOptions: {
-                                                color: 'blue',
-                                                nearRadius: 1,
-                                                farRadius: 1,
-                                            },
-                                        });
-                                        console.log('Navigation path drawn via map click.');
-                                    } else {
-                                        console.log('No directions found.');
-                                    }
-                                } catch (error) {
-                                    console.error('Error getting directions via click:', error);
-                                }
-                            }
-                        }
-                    });
+                    // Add labels for all named spaces
+                    mapData.getByType('space')
+                        .filter(space => space.name)
+                        .forEach(space => {
+                            mapView.Labels.add(space, space.name);
+                        });
                 }
             } catch (error) {
                 console.error('Failed to initialize Mappedin map:', error);
             }
         };
 
-
-        init();
+        initMap();
 
         return () => {
             if (mapViewRef.current?.destroy) {
                 mapViewRef.current.destroy();
             }
         };
-    }, []);
+    }, [isNightMode]); // Re-initialize map when isNightMode changes
 
+    useEffect(() => {
+        const mapView = mapViewRef.current;
+        const mapData = mapDataState;
+
+        if (mapView && mapData) {
+            mapView.on('click', async (event) => {
+                const { intersections } = event;
+                if (!intersections || intersections.length === 0) return;
+
+                const clickedObject = intersections.find(i => i.type === 'space');
+                if (!clickedObject) return;
+
+                const clickedSpace = clickedObject.object;
+
+                if (clickStep === 0) {
+                    setSelectedStartPoint(clickedSpace);
+                    setStartPointQuery(clickedSpace.name || '');
+                    console.log("Selected Start Space ID:", clickedSpace?.id); // Log start space ID
+                    setClickStep(1);
+                } else {
+                    setSelectedEndPoint(clickedSpace);
+                    setEndPointQuery(clickedSpace.name || '');
+                    console.log("Selected End Space ID:", clickedSpace?.id); // Log end space ID
+                    setClickStep(0);
+
+                    if (mapData && mapView && selectedStartPoint && clickedSpace) {
+                        const directions = mapData.getDirections(selectedStartPoint, clickedSpace);
+                        if (directions && directions.coordinates && directions.coordinates.length > 0) {
+                            if (path) {
+                                mapView.Paths.remove(path);
+                            }
+                            const newPath = mapView.Paths.add(directions.coordinates, {
+                                nearRadius: 0.5,
+                                farRadius: 0.5,
+                                color: '#1871fb',
+                            });
+                            setPath(newPath);
+                            console.log('Navigation path drawn via map click.');
+                        } else {
+                            console.log('No directions found.');
+                            if (path) {
+                                mapView.Paths.remove(path);
+                                setPath(null);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }, [mapDataState, clickStep, selectedStartPoint, selectedEndPoint, path]); // Dependencies for click listener
 
     const handleSearch = (query, isStart) => {
         if (!mapDataState) return;
@@ -116,12 +134,61 @@ const NavigationDrawPage = () => {
         }
     };
 
+    const handleNavigateButtonClick = async () => {
+        if (!mapDataState || !mapViewRef.current || !selectedStartPoint || !selectedEndPoint) {
+            console.warn('Map data, map view, or selected points are missing.');
+            return;
+        }
+
+        const directions = mapDataState.getDirections(selectedStartPoint, selectedEndPoint);
+        if (directions && directions.coordinates && directions.coordinates.length > 0) {
+            if (path) {
+                mapViewRef.current.Paths.remove(path);
+            }
+            const newPath = mapViewRef.current.Paths.add(directions.coordinates, {
+                color: '#1871fb',
+                nearRadius: 0.5,
+                farRadius: 0.5,
+            });
+            setPath(newPath);
+            console.log('Navigation path drawn via button.');
+        } else {
+            console.log('No directions found.');
+            if (path) {
+                mapViewRef.current.Paths.remove(path);
+                setPath(null);
+            }
+        }
+    };
+
+    const toggleNightMode = () => {
+        setIsNightMode(!isNightMode);
+        console.log("Night Mode Toggled:", !isNightMode); // Check if state is updating
+    };
+
+    const dropdownStyle = {
+        listStyleType: 'none',
+        padding: 0,
+        margin: 0,
+        border: '1px solid #ccc',
+        maxHeight: '150px',
+        overflowY: 'auto',
+        backgroundColor: 'white',
+        position: 'absolute',
+        zIndex: 1001,
+    };
+
+    const listItemStyle = {
+        padding: '8px',
+        cursor: 'pointer',
+    };
+
     return (
-        <div>
-            <h1>Draw Navigation</h1>
-            <div style={{ marginBottom: '20px', position: 'relative', zIndex: 1000 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            <h1>Search Area</h1>
+            <div style={{ marginBottom: '20px', position: 'relative', zIndex: 1000, display: 'flex', gap: '20px', alignItems: 'center' }}>
                 {/* Start Point Input */}
-                <div style={{ marginBottom: '10px' }}>
+                <div>
                     <label htmlFor="startPoint">Start Point:</label>
                     <input
                         type="text"
@@ -135,27 +202,13 @@ const NavigationDrawPage = () => {
                         }}
                     />
                     {startPointResults.length > 0 && (
-                        <ul style={{
-                            listStyleType: 'none',
-                            padding: 0,
-                            margin: 0,
-                            border: '1px solid #ccc',
-                            maxHeight: '150px',
-                            overflowY: 'auto',
-                            backgroundColor: 'white',
-                            position: 'absolute',
-                            zIndex: 1001,
-                        }}>
+                        <ul style={dropdownStyle}>
                             {startPointResults.map(space => (
-                                <li
-                                    key={space.id}
-                                    style={{ padding: '8px', cursor: 'pointer' }}
-                                    onClick={() => {
-                                        setSelectedStartPoint(space);
-                                        setStartPointQuery(space.name);
-                                        setStartPointResults([]);
-                                    }}
-                                >
+                                <li key={space.id} style={listItemStyle} onClick={() => {
+                                    setSelectedStartPoint(space);
+                                    setStartPointQuery(space.name);
+                                    setStartPointResults([]);
+                                }}>
                                     {space.name}
                                 </li>
                             ))}
@@ -179,27 +232,13 @@ const NavigationDrawPage = () => {
                         }}
                     />
                     {endPointResults.length > 0 && (
-                        <ul style={{
-                            listStyleType: 'none',
-                            padding: 0,
-                            margin: 0,
-                            border: '1px solid #ccc',
-                            maxHeight: '150px',
-                            overflowY: 'auto',
-                            backgroundColor: 'white',
-                            position: 'absolute',
-                            zIndex: 1001,
-                        }}>
+                        <ul style={dropdownStyle}>
                             {endPointResults.map(space => (
-                                <li
-                                    key={space.id}
-                                    style={{ padding: '8px', cursor: 'pointer' }}
-                                    onClick={() => {
-                                        setSelectedEndPoint(space);
-                                        setEndPointQuery(space.name);
-                                        setEndPointResults([]);
-                                    }}
-                                >
+                                <li key={space.id} style={listItemStyle} onClick={() => {
+                                    setSelectedEndPoint(space);
+                                    setEndPointQuery(space.name);
+                                    setEndPointResults([]);
+                                }}>
                                     {space.name}
                                 </li>
                             ))}
@@ -210,53 +249,28 @@ const NavigationDrawPage = () => {
 
                 {/* Navigate Button */}
                 {selectedStartPoint && selectedEndPoint && mapDataState && (
-                    <button
-                        style={{ marginTop: '20px', padding: '10px' }}
-                        onClick={async () => {
-                            const mapView = mapViewRef.current;
-                            const mapData = mapDataState;
-
-                            if (!mapData || !mapView || !selectedStartPoint || !selectedEndPoint) {
-                                console.log('Map data, map view, or selected points are not yet available.');
-                                return;
-                            }
-
-                            console.log('Selected Start Point:', selectedStartPoint);
-                            console.log('Selected End Point:', selectedEndPoint);
-
-                            // Check if Navigation is available
-                            if (mapView.Navigation) {
-                                try {
-                                    const directions = await mapView.Navigation.getDirections(selectedStartPoint, selectedEndPoint);
-
-                                    if (directions) {
-                                        await mapView.Navigation.draw(directions, {
-                                            pathOptions: {
-                                                color: 'blue',
-                                                nearRadius: 1,
-                                                farRadius: 1,
-                                            },
-                                        });
-                                        console.log('Navigation path drawn.');
-                                    } else {
-                                        console.log('Directions not found for the selected points.');
-                                    }
-                                } catch (error) {
-                                    console.error('Error getting directions:', error);
-                                }
-                            } else {
-                                console.warn('Navigation is not available on mapView.');
-                            }
-                        }}
-                    >
+                    <button style={{ marginTop: '0', padding: '10px' }} onClick={handleNavigateButtonClick}>
                         Navigate
                     </button>
-
                 )}
+
+                {/* Night Mode Toggle */}
+                <label style={{ marginLeft: '20px' }}>
+                    Night Mode:
+                    <input
+                        type="checkbox"
+                        checked={isNightMode}
+                        onChange={toggleNightMode}
+                        style={{ marginLeft: '5px' }}
+                    />
+                </label>
             </div>
 
+            {path && <p style={{ color: 'green', marginTop: '10px' }}>Navigation path drawn.</p>}
+            {path === null && selectedStartPoint && selectedEndPoint && <p style={{ color: 'orange', marginTop: '10px' }}>No navigation path drawn.</p>}
+
             {/* Map View */}
-            <div>
+            <div style={{ width: '100%' }}>
                 <BaseCampusMap ref={mapDiv} />
             </div>
         </div>
