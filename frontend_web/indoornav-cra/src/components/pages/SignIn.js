@@ -18,8 +18,8 @@ function SignIn() {
         event.preventDefault();
         setErrorMessage('');
         try {
-            const response = await axios.post('http://localhost:8080/api/auth/signin', {
-                email,
+            const response = await axios.post('http://localhost:8080/users/login', { // Backend URL
+                username: email, // Assuming your backend uses 'username' for login
                 password,
             }, {
                 headers: {
@@ -27,7 +27,7 @@ function SignIn() {
                 },
             });
             console.log('Signin successful:', response.data);
-            localStorage.setItem('jwtToken', response.data.token);
+            localStorage.setItem('jwtToken', response.data.token); // Adjust based on your backend's response
             navigate('/'); // Use navigate for redirection
         } catch (error) {
             console.error('Signin failed:', error);

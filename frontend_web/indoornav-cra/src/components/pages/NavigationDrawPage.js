@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getMapData, show3dMap } from '@mappedin/mappedin-js';
 import '@mappedin/mappedin-js/lib/index.css';
-import BaseCampusMap from '../BaseCampusMap';
+import BaseCampusMap from '../BaseCampusMap'; // Assuming you have a basic map component
+
 
 const NavigationDrawPage = () => {
     const mapDiv = useRef(null);

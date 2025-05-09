@@ -12,7 +12,7 @@ function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [role, setRole] = useState('ROLE_VISITOR'); // Default role
+  const [role, setRole] = useState('VISITOR'); // Default role
   const [passwordMatchError, setPasswordMatchError] = useState('');
   const [signupError, setSignupError] = useState('');
   const [isSigningUp, setIsSigningUp] = useState(false); // State for loading
@@ -27,7 +27,7 @@ function SignUp() {
     setConfirmPassword('');
     setFirstName('');
     setLastName('');
-    setRole('ROLE_VISITOR'); // Reset to default role
+    setRole('VISITOR'); // Reset to default role
   };
 
   useEffect(() => {
@@ -53,7 +53,7 @@ function SignUp() {
     setIsSigningUp(true); // Start loading
 
     try {
-      const response = await axios.post('http://localhost:8080/api/users', {
+      const response = await axios.post('http://localhost:8080/users/register', { // Backend URL
         username,
         email,
         password,
@@ -127,10 +127,9 @@ function SignUp() {
                 <div className="form-group">
                   <label htmlFor="role">Account Type:</label>
                   <select id="role" value={role} onChange={(e) => setRole(e.target.value)} required>
-                    <option value="ROLE_VISITOR">Visitor</option>
-                    <option value="ROLE_STUDENT">Student</option>
-                    <option value="ROLE_FACULTY">Faculty</option>
-                    <option value="ROLE_ADMIN">Admin</option>
+                    <option value="VISITOR">Visitor</option>
+                    <option value="CATS">Faculty</option>
+                    <option value="ADMIN">Admin</option>
                   </select>
                 </div>
                 <button type="submit" className="signup-button" disabled={isSigningUp || isRedirecting}>
