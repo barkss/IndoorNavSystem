@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "278159300939",
+    "project_id": "indoornavsystem-ffe87",
+    "storage_bucket": "indoornavsystem-ffe87.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:278159300939:android:70356c72a27df9956bf0ce",
+        "android_client_info": {
+          "package_name": "com.mark.indoornav"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVQ2QazImYRD6tc41PwGW-qH-9hWVt8GY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
