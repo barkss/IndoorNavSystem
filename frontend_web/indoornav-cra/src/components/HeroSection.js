@@ -17,7 +17,7 @@ function HeroSection() {
             // For a simple check: if it exists, assume it's valid enough for frontend routing.
             navigate('/point-to-point'); // Redirect to the map page if JWT exists
         } else {
-            navigate('/sign-in'); // Redirect to the login page if JWT doesn't exist
+            navigate('/point-to-point'); // Redirect to the login page if JWT doesn't exist
         }
     };
 

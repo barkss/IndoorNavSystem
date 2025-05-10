@@ -12,7 +12,7 @@ import CampusNavigationPage from './components/pages/CampusNavigationPage';
 import NavigationDrawPage from './components/pages/NavigationDrawPage';
 import BlueDotPage from './components/pages/BlueDotPage';
 import PointToPointPath from './components/pages/PointToPointPath';
-import RequireAuth from './components/RequireAuth'; // Import the RequireAuth component
+// import RequireAuth from './components/RequireAuth'; // Commenting out RequireAuth
 import ProfilePage from './components/pages/ProfilePage';
 import UserManagerPage from "./components/pages/UserManagerPage";
 
@@ -26,17 +26,15 @@ function App() {
                 <Route path="/sign-in" element={<SignIn />} />
                 <Route path="/campus" element={<BaseCampusMap />} />
 
-                {/* Protected routes */}
-                <Route element={<RequireAuth />}>
-                    <Route path="/profile" element={<ProfilePage />} />
-                    <Route path="/profile-manager" element={<UserManagerPage />} />
-                    <Route path="/services" element={<Services />} />
-                    <Route path="/products" element={<Products />} />
-                    <Route path="/navigate" element={<CampusNavigationPage />} />
-                    <Route path="/draw-navigation" element={<NavigationDrawPage />} />
-                    <Route path="/blue-dot" element={<BlueDotPage />} />
-                    <Route path="/point-to-point" element={<PointToPointPath />} />
-                </Route>
+                {/* Previously protected routes - now public */}
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/profile-manager" element={<UserManagerPage />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/navigate" element={<CampusNavigationPage />} />
+                <Route path="/draw-navigation" element={<NavigationDrawPage />} />
+                <Route path="/blue-dot" element={<BlueDotPage />} />
+                <Route path="/point-to-point" element={<PointToPointPath />} />
             </Routes>
         </Router>
     );

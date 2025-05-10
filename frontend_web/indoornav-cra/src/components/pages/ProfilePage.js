@@ -5,10 +5,10 @@ import '../HeroSection.css';
 
 function ProfilePage() {
     const [userData, setUserData] = useState({
-        username: 'testuser',
-        firstName: 'Test',
-        lastName: 'User',
-        email: 'test@example.com',
+        username: 'john123',
+        firstName: 'John',
+        lastName: 'Baclayon',
+        email: 'john@gmail.com',
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);

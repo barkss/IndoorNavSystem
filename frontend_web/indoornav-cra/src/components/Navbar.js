@@ -121,17 +121,17 @@ function Navbar() {
                     </Link>
                   </li>
 
-                  <li>
-                    {isLoggedIn ? (
-                        <button className='profile-dropdown-item logout-button' onClick={handleLogout}>
-                          Logout
-                        </button>
-                    ) : (
-                        <Link to='/sign-in' className='profile-dropdown-item' onClick={() => { closeMobileMenu(); setProfileDropdown(false); }}>
-                          Login
-                        </Link>
-                    )}
-                  </li>
+                  {/*<li>*/}
+                  {/*  {isLoggedIn ? (*/}
+                  {/*      <button className='profile-dropdown-item logout-button' onClick={handleLogout}>*/}
+                  {/*        Logout*/}
+                  {/*      </button>*/}
+                  {/*  ) : (*/}
+                  {/*      <Link to='/sign-in' className='profile-dropdown-item' onClick={() => { closeMobileMenu(); setProfileDropdown(false); }}>*/}
+                  {/*        Login*/}
+                  {/*      </Link>*/}
+                  {/*  )}*/}
+                  {/*</li>*/}
                 </ul>
               </li>
             </ul>
