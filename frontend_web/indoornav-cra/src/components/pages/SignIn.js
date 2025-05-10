@@ -44,7 +44,7 @@ function SignIn() {
 
     return (
         <div className='hero-container'>
-            {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
+            <video src='/videos/cit-drone.mp4' autoPlay loop muted />
             <div className="signin-container">
                 <h2>Sign In</h2>
                 {errorMessage && <div className="error-message">{errorMessage}</div>}

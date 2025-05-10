@@ -4,11 +4,17 @@ import './UserManagerPage.css';
 import '../HeroSection.css';
 
 function UserManagerPage() {
-    const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [users, setUsers] = useState([
+        { id: 1, username: 'admin', email: 'admin@example.com', firstName: 'Admin', lastName: 'User' },
+        { id: 2, username: 'user1', email: 'user1@example.com', firstName: 'First', lastName: 'User' },
+        { id: 3, username: 'user2', email: 'user2@example.com', firstName: 'Second', lastName: 'User' },
+    ]);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    // Commenting out the useEffect hook that fetches data from the backend
+    /*
     useEffect(() => {
         const fetchUsers = async () => {
             setLoading(true);
@@ -46,8 +52,11 @@ function UserManagerPage() {
 
         fetchUsers();
     }, [navigate]);
+    */
 
     const handleDeleteUser = async (id) => {
+        // Commenting out the actual delete logic for now
+        /*
         const token = localStorage.getItem('jwtToken');
         if (!token) {
             navigate('/sign-in');
@@ -72,12 +81,15 @@ function UserManagerPage() {
         } catch (err) {
             setError(err.message);
         }
+        */
+        // Simulate successful deletion
+        setUsers(users.filter(user => user.id !== id));
     };
 
     if (loading) {
         return (
             <div className='hero-container'>
-                {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
+                <video src='/videos/cit-drone.mp4' autoPlay loop muted />
                 <div className="signup-container user-table-container">
                     <h2>Loading Users...</h2>
                 </div>
@@ -88,7 +100,7 @@ function UserManagerPage() {
     if (error) {
         return (
             <div className='hero-container'>
-                {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
+                <video src='/videos/cit-drone.mp4' autoPlay loop muted />
                 <div className="signup-container user-table-container">
                     <h2>Error Loading Users</h2>
                     <div className="alert alert-danger">{error}</div>
@@ -99,7 +111,7 @@ function UserManagerPage() {
 
     return (
         <div className='hero-container'>
-            {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
+            <video src='/videos/cit-drone.mp4' autoPlay loop muted />
             <div className="signup-container user-table-container">
                 <h2>User Manager</h2>
                 {users.length > 0 ? (

@@ -4,15 +4,22 @@ import './ProfilePage.css';
 import '../HeroSection.css';
 
 function ProfilePage() {
-    const [userData, setUserData] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [userData, setUserData] = useState({
+        username: 'testuser',
+        firstName: 'Test',
+        lastName: 'User',
+        email: 'test@example.com',
+    });
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [editMode, setEditMode] = useState(false);
-    const [updatedFirstName, setUpdatedFirstName] = useState('');
-    const [updatedLastName, setUpdatedLastName] = useState('');
-    const [updatedEmail, setUpdatedEmail] = useState('');
+    const [updatedFirstName, setUpdatedFirstName] = useState('Test');
+    const [updatedLastName, setUpdatedLastName] = useState('User');
+    const [updatedEmail, setUpdatedEmail] = useState('test@example.com');
     const navigate = useNavigate();
 
+    // Commenting out the useEffect hook that fetches data from the backend
+    /*
     useEffect(() => {
         const fetchProfile = async () => {
             setLoading(true);
@@ -54,6 +61,7 @@ function ProfilePage() {
 
         fetchProfile();
     }, [navigate]);
+    */
 
     const handleEditClick = () => {
         setEditMode(true);
@@ -73,6 +81,8 @@ function ProfilePage() {
             return;
         }
 
+        // Commenting out the save logic for now
+        /*
         try {
             const response = await fetch('/api/users/me', {
                 method: 'PUT',
@@ -98,12 +108,16 @@ function ProfilePage() {
         } catch (err) {
             setError(err.message);
         }
+        */
+        // Simulate successful save
+        setUserData({ ...userData, firstName: updatedFirstName, lastName: updatedLastName, email: updatedEmail });
+        setEditMode(false);
     };
 
     if (loading) {
         return (
             <div className='hero-container'>
-                {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
+                <video src='/videos/cit-drone.mp4' autoPlay loop muted />
                 <div className="signup-container">
                     <h2>Loading Profile...</h2>
                 </div>
@@ -114,7 +128,7 @@ function ProfilePage() {
     if (error) {
         return (
             <div className='hero-container'>
-                {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
+                <video src='/videos/cit-drone.mp4' autoPlay loop muted />
                 <div className="signup-container">
                     <h2>Error Loading Profile</h2>
                     <div className="alert alert-danger">{error}</div>
@@ -126,7 +140,7 @@ function ProfilePage() {
     if (!userData) {
         return (
             <div className='hero-container'>
-                {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
+                <video src='/videos/cit-drone.mp4' autoPlay loop muted />
                 <div className="signup-container">
                     <h2>No Profile Data</h2>
                     <p>No profile information available.</p>
@@ -137,7 +151,7 @@ function ProfilePage() {
 
     return (
         <div className='hero-container'>
-            {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
+            <video src='/videos/cit-drone.mp4' autoPlay loop muted />
             <div className="signup-container profile-info-container">
                 <h2>Your Profile</h2>
                 {editMode ? (

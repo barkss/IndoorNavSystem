@@ -83,7 +83,7 @@ function SignUp() {
 
   return (
       <div className='hero-container'>
-        {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
+        <video src='/videos/cit-drone.mp4' autoPlay loop muted />
         <div className="signup-container">
           <h2>Sign Up</h2>
           {signupError && <div className="alert alert-danger">{signupError}</div>}
