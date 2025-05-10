@@ -1,8 +1,8 @@
 # Build stage
 FROM maven:3.8.6-eclipse-temurin-17 AS build
 WORKDIR /workspace/app
-COPY pom.xml .
-COPY src src
+COPY /pom.xml .
+COPY /src .
 RUN mvn clean package -DskipTests
 
 # Run stage
