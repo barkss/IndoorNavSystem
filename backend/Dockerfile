@@ -1,13 +1,8 @@
-# Build stage
-FROM maven:3.8.6-eclipse-temurin-17 AS build
-WORKDIR /workspace/app
-COPY /pom.xml .
-COPY /src .
+FROM maven:3.8.5-openjdk-17 AS build
+COPY . .
 RUN mvn clean package -DskipTests
 
-# Run stage
-FROM eclipse-temurin:17-jre-jammy
-WORKDIR /app
+FROM openjdk:17.0.1-jdk-slim
 COPY --from=build /workspace/app/target/indoor-navigation-backend-*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
