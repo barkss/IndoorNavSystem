@@ -77,7 +77,7 @@ function UserManagerPage() {
     if (loading) {
         return (
             <div className='hero-container'>
-                <video src='/videos/cit-drone.mp4' autoPlay loop muted />
+                {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
                 <div className="signup-container user-table-container">
                     <h2>Loading Users...</h2>
                 </div>
@@ -88,7 +88,7 @@ function UserManagerPage() {
     if (error) {
         return (
             <div className='hero-container'>
-                <video src='/videos/cit-drone.mp4' autoPlay loop muted />
+                {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
                 <div className="signup-container user-table-container">
                     <h2>Error Loading Users</h2>
                     <div className="alert alert-danger">{error}</div>
@@ -99,7 +99,7 @@ function UserManagerPage() {
 
     return (
         <div className='hero-container'>
-            <video src='/videos/cit-drone.mp4' autoPlay loop muted />
+            {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
             <div className="signup-container user-table-container">
                 <h2>User Manager</h2>
                 {users.length > 0 ? (

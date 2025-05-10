@@ -69,4 +69,19 @@ video {
   .btn {
     width: 100%;
   }
+
+  .hero-container video {
+    width: 100%; /* Make the video take the full width of its container */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensure the video covers the container without distortion */
+    max-height: 100vh; /* Prevent the video from exceeding the viewport height */
+  }
 }
+
+  @media (max-width: 768px) {
+    .hero-container video {
+      object-fit: contain; /* Adjust for smaller screens if needed */
+    }
+  }
+
+

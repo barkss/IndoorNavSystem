@@ -18,17 +18,16 @@ function SignIn() {
         event.preventDefault();
         setErrorMessage('');
         try {
-            const response = await axios.post('http://localhost:8080/users/login', { // Backend URL
-                username: email, // Assuming your backend uses 'username' for login
+            const response = await axios.post('http://localhost:8080/users/login', {
+                email: email,  // Changed from username to email
                 password,
             }, {
                 headers: {
                     'Content-Type': 'application/json',
-                },
+                }
             });
-            console.log('Signin successful:', response.data);
-            localStorage.setItem('jwtToken', response.data.token); // Adjust based on your backend's response
-            navigate('/'); // Use navigate for redirection
+            localStorage.setItem('jwtToken', response.data.token);
+            navigate('/');
         } catch (error) {
             console.error('Signin failed:', error);
             if (error.response && error.response.status === 401) {
@@ -45,7 +44,7 @@ function SignIn() {
 
     return (
         <div className='hero-container'>
-            <video src='/videos/cit-drone.mp4' autoPlay loop muted />
+            {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
             <div className="signin-container">
                 <h2>Sign In</h2>
                 {errorMessage && <div className="error-message">{errorMessage}</div>}

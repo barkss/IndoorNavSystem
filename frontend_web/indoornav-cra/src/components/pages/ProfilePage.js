@@ -103,7 +103,7 @@ function ProfilePage() {
     if (loading) {
         return (
             <div className='hero-container'>
-                <video src='/videos/cit-drone.mp4' autoPlay loop muted />
+                {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
                 <div className="signup-container">
                     <h2>Loading Profile...</h2>
                 </div>
@@ -114,7 +114,7 @@ function ProfilePage() {
     if (error) {
         return (
             <div className='hero-container'>
-                <video src='/videos/cit-drone.mp4' autoPlay loop muted />
+                {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
                 <div className="signup-container">
                     <h2>Error Loading Profile</h2>
                     <div className="alert alert-danger">{error}</div>
@@ -126,7 +126,7 @@ function ProfilePage() {
     if (!userData) {
         return (
             <div className='hero-container'>
-                <video src='/videos/cit-drone.mp4' autoPlay loop muted />
+                {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
                 <div className="signup-container">
                     <h2>No Profile Data</h2>
                     <p>No profile information available.</p>
@@ -137,7 +137,7 @@ function ProfilePage() {
 
     return (
         <div className='hero-container'>
-            <video src='/videos/cit-drone.mp4' autoPlay loop muted />
+            {/*<video src='/videos/cit-drone.mp4' autoPlay loop muted />*/}
             <div className="signup-container profile-info-container">
                 <h2>Your Profile</h2>
                 {editMode ? (
