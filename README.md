@@ -1,5 +1,8 @@
-📌 Project Overview
-The Indoor Navigation System for Campus is designed to help students and visitors navigate within a campus efficiently. It will include both a web-based interface and a mobile application that provides real-time navigation, campus store information, and user-specific recommendations. This system will integrate client-server architecture, external databases, and third-party services to ensure a seamless and scalable solution.
+📍 CIT-U Campus Indoor Navigation System (IndoorNav)
+An Indoor Navigation System designed for the Cebu Institute of Technology - University campus, developed using React, Spring Boot, MySQL, Firebase Authentication, and Mappedin SDK.
+
+🚀 Project Overview
+IndoorNav is a campus navigation system that helps students, faculty, and visitors locate classrooms, offices, and other facilities within CIT-U buildings using indoor maps and real-time positioning.
 
 📂 Repository Structure
 📁 IT3412-SystemName
@@ -10,27 +13,67 @@ The Indoor Navigation System for Campus is designed to help students and visitor
 ├── 📂 frontend_web
 ├── 📂 frontend_mobile
 
-🚀 Features
-User Authentication: Secure login and registration for users (students and campus store owners) using OAuth and Firebase Authentication.
+⚙️ Tech Stack
+Frontend: React, Firebase Authentication, Mappedin SDK
 
-Indoor Navigation & Mapping: Real-time positioning within the campus using Google Maps API (indoor) or OpenStreetMap.
+Backend: Spring Boot, MySQL
 
-Store Directory & Search: A searchable directory of stores, categories, and promotions with CRUD operations.
+Authentication: Firebase (OAuth & JWT)
 
-Push Notifications: Real-time notifications for promotions, new campus store openings, and personalized recommendations.
+Version Control: GitHub
 
-User Analytics & Reporting: Data visualization for campus store owners on visitor traffic, most searched stores, and heatmaps.
+🔑 Core Features (MVP)
+✅ User Registration and Login (JWT secured)
 
-Third-party API Integration: Integration with Google Maps API for indoor navigation and PayPal/Stripe for online transactions.
+✅ Firebase Authentication (Email/Password, Google)
 
-📚 Links
-• figma(add link here)
-• diagram (add link here)
+✅ User Profile management
 
-👤 Developers Profile
-<div style="display: flex; justify-content: center; gap: 10px;"> <img src="https://github.com/userEntity-attachments/assets/a1859554-3ea5-4290-a437-6cad79a52175" alt="Developer 1" width="150" height="150" style="border: 2px solid black; border-radius: 10px;">
-<img src="https://github.com/userEntity-attachments/assets/72296557-f42b-4f98-a3bd-d9392c4d5c18" alt="Developer 2" width="150" height="150" style="border: 2px solid black; border-radius: 10px;">
+✅ Interactive campus map using Mappedin SDK
 
-<img src="https://github.com/userEntity-attachments/assets/33565dd5-d09b-40ef-9559-d6af531be056" alt="Developer 3" width="150" height="150" style="border: 2px solid black; border-radius: 10px;">
+✅ Indoor navigation (via Mappedin)
 
-</div>
+![image](https://github.com/user-attachments/assets/94e7fab5-563e-41c5-be88-48b458c52669)
+
+
+🛠️ Installation
+Backend Setup
+cd backend
+# Import the Spring Boot project into your IDE (e.g., IntelliJ, VS Code)
+# Run the Spring Boot application
+# Configure your MySQL connection in application.properties
+
+Frontend Setup
+cd frontend
+npm install
+npm start
+# The app will run at http://localhost:3000
+
+🔗 Firebase Setup
+Setup Firebase project and enable Email/Password Authentication.
+
+Use your Firebase config in your React project.
+
+📡 Mappedin SDK Integration
+Map is loaded using mapId and secretkey.
+All map interactions and rendering are handled directly in the React frontend.
+
+📦 Database Schema (MySQL)
+
+✅ Figma UI Design
+Prototype Link: 
+
+📌 Future Improvements
+🔄 Real-time user location sharing via WebSocket
+
+📚 Add POI management backend (admin CRUD)
+
+📱 Mobile app deployment using React Native
+
+👥 Developers
+John Michael Baclayon
+John David Catulong 
+
+📜 License
+This project is for educational purposes at Cebu Institute of Technology - University.
+
